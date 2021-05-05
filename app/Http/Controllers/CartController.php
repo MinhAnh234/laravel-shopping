@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Cart;
+use App\Models\products;
 use Illuminate\Contracts\Session\Session as SessionSession;
 use Illuminate\Support\Facades\DB;
 use Session;
@@ -29,8 +30,8 @@ class CartController extends Controller
             DB::table('view_user')->insert($data);
         }
 
-      
-       $products= DB::table('products')->paginate(6);
+    
+       $products= products::paginate(12);
        if(Session('Cart')) {
        $Cart = Session('Cart');
 
@@ -76,7 +77,7 @@ class CartController extends Controller
     }
     public function searchProduct(Request $request) {
         $keywords=$request->keywords;
-        $products= DB::table('products')->where('name','like','%'.$keywords.'%')->paginate(6);
+        $products= products::where('name','like','%'.$keywords.'%')->paginate(6);
         if(Session('Cart')) {
             $Cart = Session('Cart');
 
@@ -88,6 +89,20 @@ class CartController extends Controller
                                  ->with('Cart',$Cart);
           }
 
+    }
+    public function searchCategoryProduct($name){
+
+        $products=  products::where('category','like','%'.$name.'%')->paginate(6);
+        if(Session('Cart')) {
+            $Cart = Session('Cart');
+
+            return view('index')->with('products',$products)
+                                ->with('Cart',$Cart);
+             } else {
+             $Cart =null;
+             return view('index')->with('products',$products)
+                                 ->with('Cart',$Cart);
+          }
     }
     function upload(Request $request)
     {

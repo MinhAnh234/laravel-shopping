@@ -8,7 +8,7 @@
     <meta name="description" content="Colorlib Templates">
     <meta name="author" content="Colorlib">
     <meta name="keywords" content="Colorlib Templates">
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>ResetPassword</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>

@@ -60,7 +60,7 @@ class LoginController extends Controller
             response([
                 'success' => false,
                 'message' => 'Email or password is incorrect'
-            ], );
+            ] );
     }
 
     public function logout(Request $request )

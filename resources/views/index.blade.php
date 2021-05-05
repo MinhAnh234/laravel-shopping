@@ -84,7 +84,7 @@
                     </div>
                     <div  class="text-danger errorMessage" style="display: none; margin-left:13px "><i class="fa fa-exclamation-triangle"  aria-hidden="true"></i>&nbsp Email or password incorrect!!! </div>
                     <div class="text-right p-t-8 p-b-31">
-                        <a href="#">
+                        <a href="/password/reset">
                             Forgot password?
                         </a>
                     </div>
@@ -168,7 +168,9 @@
                     <div class="loginSuccess" style="float: right">
                         <a href="javascript:"  id="loginBtn" class="login-panel"><i class="fa fa-user"></i><span>Login</span></a>
                         @if(Auth()->check())
-                           
+                        @if(Auth()->user()->role->name=="admin")
+                        <div class="" style="position:fixed; top:10px;right:5px;z-index:100"><a class="btn btn-success btn--shockwave" href="/admin">Go to Admin Page</a></div>
+                        @endif
                             <script> $('#loginBtn').hide()</script>
                             <form style="float:right" class="logout login-panel" action="{{ url('/logout') }}" method="post"  data-type="json">
                                 @csrf
@@ -206,7 +208,16 @@
                     </div>
                     <div class="col-lg-7 col-md-7">
                         <div class="advanced-search">
-                            <button type="button" class="category-btn">All Categories</button>
+                           <button type="button" class="category-btn">All Categories
+                                <ul class="allCateogry-hover">
+                                    <li><a class="search-category" data-link="Sport" href="javascript:"> Sport</a></li>
+                                    <li><a class="search-category" data-link="Computer" href="javascript:">Computer</a></li>
+                                    <li><a class="search-category" data-link="Devices" href="javascript:">Devices</a></li>
+                                    <li><a class="search-category" data-link="Shoes" href="javascript:">Shoes</a></li>
+                                    <li><a class="search-category" data-link="Fashion" href="javascript:">Fashion</a></li>
+                                </ul>
+                            </button>
+                           
                             <form class="input-group search" method="get" action="{{ URL('/search') }}">
                                 <input name="keywords" type="text" placeholder="What do you need?">
                                 <button type="submit"><i class="ti-search"></i></button>
@@ -280,14 +291,11 @@
                         <i class="ti-menu"></i>
                         <span>All departments</span>
                         <ul class="depart-hover">
-                            <li class="active"><a href="#">Women’s Clothing</a></li>
-                            <li><a href="#">Men’s Clothing</a></li>
-                            <li><a href="#">Underwear</a></li>
-                            <li><a href="#">Kid's Clothing'</a></li>
-                            <li><a href="#">Brand Fashion</a></li>
-                            <li><a href="#">Accessories/Shoes</a></li>
-                            <li><a href="#">Luxury Brands</a></li>
-                            <li><a href="#">Brand Outdoor Apparel</a></li>
+                            <li><a class="search-category" data-link="Sport" href="javascript:"> Sport</a></li>
+                            <li><a class="search-category" data-link="Computer" href="javascript:">Computer</a></li>
+                            <li><a class="search-category" data-link="Devices" href="javascript:">Devices</a></li>
+                            <li><a class="search-category" data-link="Shoes" href="javascript:">Shoes</a></li>
+                            <li><a class="search-category" data-link="Fashion" href="javascript:">Fashion</a></li>
                         </ul>
                     </div>
                 </div>
@@ -327,6 +335,9 @@
             <div class="row " style="margin-top:-65px; margin-bottom:50px">
                 <div class="col"> 
                 <div class="btn btn-success Recommended">Recommended</div></div>
+
+           
+                @if ($products->currentPage()==1)
                 <div id="carouselExampleIndicators" class="carousel slide container" data-ride="carousel">
                     <ol class="carousel-indicators">
                         <?php $count=0;?>
@@ -362,13 +373,18 @@
                       <span class="sr-only">Next</span>
                     </a>
                   </div>
+                  @endif
             </div>
+
         </div>
+        @if($products->currentPage()==1)
          <section id="slider" class="center slider">
    
             @foreach($products as $product)
                  <div>
+                     <a href={{"#product-".$product->id}}>
                     <img height="200px" src="assets/img/products/{{  $product->img }}" alt="">
+                    </a>
                  </div>
         @endforeach
   </section>
@@ -384,6 +400,7 @@
       });
 
 </script>
+@endif
     </div>
         <div class="row showProduct" style="margin-top:-130px; margin-bottom:50px" >
         <div class="container">
@@ -395,16 +412,20 @@
                                 <h3 style="color:red" class="container">No result found</h3>
 
                             @endif
+                            @if($products)
                             @foreach($products as $product)
-                            <div class="col-lg-4 col-sm-6">
+                            <div class="col-lg-3 col-sm-6">
                                 <div data-aos="flip-left"
                                 data-aos-easing="ease-out-cubic"
                                 data-aos-duration="1500" class="product-item">
                                     <div class="pi-pic">
-                                        <img height="395px" src="assets/img/products/{{  $product->img }}" alt="">
+                                        <img id={{"product-".$product->id }} height="150px" src="assets/img/products/{{  $product->img }}" alt="">
+                                        @if ($product->Sale->percent!=0)
                                         <div class="sale pp-sale">Sale</div>
+                                       
+                                        @endif
                                         <div class="icon" class="heart">
-                                            <i class="icon_heart_alt"></i>
+                                           
                                         </div>
                                         <ul>
                                             <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
@@ -418,12 +439,18 @@
                                             <h5>{{ $product->name }}</h5>
                                         </a>
                                         <div class="product-price">
-                                            ￥{{number_format( $product->price) }}
+                                           
+                                            @if ($product->Sale->percent!=0)
+                                            <span >￥{{number_format( $product->price) }}</span>
+                                            @endif
+                                            ￥{{ (((100-$product->Sale->percent))/100)*$product->price}}
                                         </div>
+                                       
                                     </div>
                                 </div>
                             </div>
                             @endforeach
+                            @endif
                             <script>
                                 AOS.init();
                               </script>
@@ -464,7 +491,7 @@
                                             $('.product-shop').html(
                                                 $('<div />').html(response).find('.product-shop').html()
                                             );
-                                            $('.sale').hide();
+                                          
                                           });
                                     });
                                     $('.next').on("click",function(){
@@ -475,7 +502,7 @@
                                             $('.product-shop').html(
                                                 $('<div />').html(response).find('.product-shop').html()
                                             );
-                                            $('.sale').hide();
+                                      
                                           });
                                     })
                                     $('.page').on("click",function(){
@@ -486,7 +513,7 @@
                                             $('.product-shop').html(
                                                 $('<div />').html(response).find('.product-shop').html()
                                             );
-                                            $('.sale').hide();
+                                          
                                           });
                                     })
 
@@ -627,6 +654,16 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script src="assets/js/owl.carousel.min.js"></script>
     <script src="assets/js/main.js"></script>
     <script>
+       
+
+        
+         $( ".icon_bag_alt" ).hover(
+        function() {
+            $('.cart-hover').show();
+  }, function() {
+    
+  });
+       
          $("#icon_heart_alt").on("click",function(){
             $('#icon_heart_alt').empty();
             $('#icon_heart_alt').html('<i class="fa fa-heart"></i>');
@@ -784,8 +821,20 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
               });
 
           }
+          $('.search-category').on("click",function(){
+            $.ajax({
+                url: '/search/'+$(this).data("link"),
+                type: 'GET',
+              }).done(function(response,status, xhr) {
+                $('.product-shop').html(
+                    $('<div />').html(response).find('.product-shop').html()
+                );
+                $('#slider').hide();
+                $('.Recommended').hide();
+                $('.showProduct').css("margin-top", "0px");
+        })
+    })
     </script>
-
 </body>
 
 </html>

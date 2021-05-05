@@ -103,7 +103,9 @@ ol {
 	margin-bottom: 38px;
 	position: relative;
 }
-
+.product-list {
+	margin-top:100px;
+}
 .section-title h2:before {
 	position: absolute;
 	left: 0;
@@ -383,9 +385,20 @@ ol {
 }
 
 .inner-header {
-	padding: 39px 0;
-}
 
+		padding: 10px 0 2px 0;
+
+}
+.header-section {
+	position: fixed;
+    z-index: 9000;
+    background-color: white;
+    width: 100%;
+    top: 0;
+}
+.breacrumb-section {
+	margin-top: 180px;
+}
 .inner-header .logo {
 	padding: 12px 0;
 }
@@ -406,7 +419,7 @@ ol {
 	border: none;
 	padding-left: 23px;
 	padding-top: 11px;
-	padding-bottom: 13px;
+	padding-bottom: 28px;
 	padding-right: 60px;
 	font-size: 15px;
 	color: #252525;
@@ -423,6 +436,23 @@ ol {
 	content: "";
 }
 
+.allCateogry-hover {
+	min-width: 200px;
+	display:none;
+	position: absolute;
+    top: 50px;
+    left: -1px;
+    background-color: white;
+    z-index: 20000;
+    padding: 20px 20px;
+	text-align:left;
+}
+.allCateogry-hover li a {
+	font-size:15px;
+}
+.category-btn:hover .allCateogry-hover {
+	display:block;
+}
 .inner-header .advanced-search .category-btn:after {
 	position: absolute;
 	right: 11px;
@@ -4109,7 +4139,29 @@ ol {
 /* Large Device: 480px */
 
 @media only screen and (max-width: 767px) {
-	
+	.breacrumb-section {
+		margin-top:0;
+	}
+	.pi-pic {
+		margin: auto 23px;
+	}
+	.pi-text {
+		margin:auto 28px;
+	}
+	.header-section {
+		position: unset;
+	}
+	.text-right {
+		position:absolute;
+	}
+	.product-item .pi-pic img {
+		width: 280px  !important;
+		min-width: 40% !important;
+   	    margin: 10px 37px;
+	}
+	#carouselExampleIndicators img {
+		height: 205px  !important;
+	}
 	.instagram-photo .insta-item {
 		width: 50%;
 		height: 300px;

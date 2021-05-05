@@ -10,6 +10,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- bootstrap-css -->
 <link rel="stylesheet" href="/adminTheme/css/bootstrap.min.css" >
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <!-- //bootstrap-css -->
 <!-- Custom CSS -->
 <link href="/adminTheme/css/style.css" rel='stylesheet' type='text/css' />
@@ -267,8 +268,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </a>
                     <ul class="sub">
 						<li><a href="/admin/addProduct">Add product</a></li>
-						<li><a href="/admin/addProduct">Delete product</a></li>
-                        <li><a href="/admin/addProduct">Update product</a></li>
+						<li><a href="/admin/managerProducts">Manager products</a></li>
                     </ul>
                 </li>
                 <li>

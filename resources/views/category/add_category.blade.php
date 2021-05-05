@@ -9,7 +9,8 @@
             <div class="row">
                 <div class="container position-center">
                     @if (Session::has('errorImage'))
-                    <div style="width:104%" class="alert alert-danger">{{ Session::get('errorImage') }}</div>
+                    <div style="margin-left:-8px" class="alert alert-danger">{{ Session::get('errorImage') }}</div>
+                    {{ Session::forget('errorImage')}}
                    @endif
                 </div>
             </div>
@@ -17,11 +18,17 @@
                 <div class="row ">
                     <div class="position-center">
                         <form  id="addProductForm" action="{{ url('/addCategory') }}" method="POST">
+                            @if($id)
+                               <input type="hidden" value="{{ $id }}" name="id" >
+                            @else
+                            <input type="hidden" value="" name="id" >
+                            @endif
                             @csrf
                             <div class="form-group">
                                 @if (Session::has('errors'))
                                 @foreach (Session::get('errors') as $error)
                                     <div class="alert alert-danger">{{ $error }}</div>
+                                    {{ Session::forget('errors')}}
                                 @endforeach
                                 @endif
                                 @if (Session::has('success'))
@@ -37,14 +44,19 @@
                             <div class="form-group">
                                 <label for="category">Category:</label>
                                 <select name="category" id="category">
-                                    <option>Choose category</option>
-                                    <option value="sweater">sweater</option>
-                                    <option value="coat">coat</option>
-                                    <option value="hat">hat</option>
-                                    <option value="scarf">scarf</option>
-                                    <option value="backpack">backpack</option>
-                                    <option value="shoes">shoes</option>
-                                    <option value="anorak">anorak</option>
+                                    <option value="" >Choose category</option>
+                                    <option value="Devices">Devices</option>
+                                    <option value="Computer">Computer</option>
+                                    <option value="Fashion">Fashion</option>
+                                    <option value="Sports">Sports</option>
+                                    <option value="Shoes">Shoes</option>
+                                </select>
+                                 <select name="Sale_id" id="Sale_id">
+                                    <option value="" >Choose sale percent</option>
+                                    <option value="0">0%</option>
+                                    <option value="1">10%</option>
+                                    <option value="2">20%</option>
+                                    <option value="3">30%</option>
                                 </select>
                             </div>
                             <h4>Choose image of product:</h4>
@@ -54,7 +66,7 @@
                 </div>
                 <form class="form-signin text-center" id="user_save_profile_form" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <input class="position-center" onchange="doAfterSelectImage(this)" type="file" id="profile_pic"
+                    <input class="position-center" onchange="doAfterSelectImage(this)" type="file" multiple accept=".jpg, .png" id="profile_pic"
                         name="select_file" />
                     <div class="photo-row">
                         <img id="imgProduct" width="300px" height="350px" style="margin-bottom: 10px">       
@@ -72,6 +84,9 @@
             </div>
            
             <script>
+                $('input').on("click",function(){
+                        $('.alert').remove();
+                });
                 function doAfterSelectImage(input) {
                     readURL(input);
                     uploadUserProfileImage();

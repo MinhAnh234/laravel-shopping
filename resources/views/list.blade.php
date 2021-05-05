@@ -40,9 +40,9 @@
                                 @if($Cart!=null)
                                 @foreach($Cart->products as $product) 
                                 <tr id="product{{$product['productInfo']->id}}" >
-                                    <td class="cart-pic"><img style="margin-top:10px" height="200px" src="assets/img/products/{{$product['productInfo']->img}}" alt=""></td>
-                                    <td class="cart-title">
-                                        <h5>{{$product['productInfo']->name}}</h5>
+                                    <td class="cart-pic"><img style="margin-top:10px;max-height:50%;max-width:50%"  src="assets/img/products/{{$product['productInfo']->img}}" alt=""></td>
+                                    <td class="cart-title" >
+                                        <h6>{{$product['productInfo']->name}}</h6>
                                     </td>
                                     <td class="p-price" >￥{{ number_format($product['productInfo']->price)}}</td>
                                     <td class="qua-col">
